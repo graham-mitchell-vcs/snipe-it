@@ -1,5 +1,7 @@
 ### Clean the old deployment
 
+Install Docker if not already https://docs.docker.com/engine/install/ubuntu/
+
 ```
 cd ~/snipe-it                # or wherever the previous project lives
 
