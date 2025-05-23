@@ -2,6 +2,8 @@
 
 Install Docker if not already https://docs.docker.com/engine/install/ubuntu/
 
+Then:
+
 ```
 cd ~/snipe-it                # or wherever the previous project lives
 
