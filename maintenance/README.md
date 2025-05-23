@@ -9,58 +9,63 @@
 
 ---
 
-## 1  Routine code update (clean & reproducible)
+### 1  Routine code update (clean & reproducible)
 
-# SSH into the server
+#### SSH into the server
 
-# Pull latest code
+#### Pull latest code
+
+```
 cd ~/snipe-it
 git pull
+```
 
-# Rebuild image & restart stack
-docker compose up -d --build
+#### Rebuild image & restart stack
 
-# (Optional) tail logs
-docker compose logs -f --tail=50
+- `docker compose up -d --build`
+
+#### (Optional) tail logs
+
+`docker compose logs -f --tail=50`
 
 ---
 
-## 2 Emergency live patch
+### 2 Emergency live patch
 
 Only for urgent production fixes — the change lives only in this container until you capture it.
 
-# SSH into the server
+#### SSH into the server
 cd ~/snipe-it
 
-# Enter the running app container
+#### Enter the running app container
 docker compose exec app bash
 
-# Edit & clear cache
+#### Edit & clear cache
 nano /var/www/html/path/to/file.php
 php artisan optimize:clear
 exit
 
 ---
 
-## 3 Copy that patch back to Git (make it permanent)
+### 3 Copy that patch back to Git (make it permanent)
 
-# Inside ~/snipe-it on the host
+#### Inside ~/snipe-it on the host
 CID=$(docker compose ps -q app)
 
-# Copy modified file(s) from container → working tree
+#### Copy modified file(s) from container → working tree
 docker cp "$CID":/var/www/html/path/to/file.php ./path/to/file.php
 
-# Commit & push
+#### Commit & push
 git add path/to/file.php
 git commit -m "Hot-fix: <description>"
 git push
 
-# Bake fix into fresh image
+#### Bake fix into fresh image
 docker compose up -d --build
 
 ---
 
-## 4 Handy maintenance commands
+### 4 Handy maintenance commands
 
 | Purpose                                              | Command                                                      |
 | ---------------------------------------------------- | ------------------------------------------------------------ |
@@ -73,7 +78,7 @@ docker compose up -d --build
 
 ---
 
-## 5 Secrets
+### 5 Secrets
 .env holds real passwords / keys — never commit it (already in .gitignore).
 
 After editing .env, run docker compose up -d to apply changes.
