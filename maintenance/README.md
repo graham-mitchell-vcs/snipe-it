@@ -11,7 +11,6 @@
 
 ## 1  Routine code update (clean & reproducible)
 
-```bash
 # SSH into the server
 
 # Pull latest code
@@ -23,6 +22,8 @@ docker compose up -d --build
 
 # (Optional) tail logs
 docker compose logs -f --tail=50
+
+---
 
 ## 2 Emergency live patch
 
@@ -38,6 +39,8 @@ docker compose exec app bash
 nano /var/www/html/path/to/file.php
 php artisan optimize:clear
 exit
+
+---
 
 ## 3 Copy that patch back to Git (make it permanent)
 
@@ -55,6 +58,8 @@ git push
 # Bake fix into fresh image
 docker compose up -d --build
 
+---
+
 ## 4 Handy maintenance commands
 
 | Purpose                                              | Command                                                      |
@@ -66,8 +71,9 @@ docker compose up -d --build
 | Run Artisan                                          | `docker compose exec app php artisan <cmd>`                  |
 | Check health / ports                                 | `docker compose ps`                                          |
 
-## 5 Secrets
+---
 
+## 5 Secrets
 .env holds real passwords / keys — never commit it (already in .gitignore).
 
 After editing .env, run docker compose up -d to apply changes.
