@@ -1,0 +1,6 @@
+services:
+  app:
+    build: .                  # uses the repo’s Dockerfile
+    image: assets-snipeit:latest
+    ports:
+      - "80:80"               # host 80 → container 80
